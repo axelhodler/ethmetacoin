@@ -6,7 +6,7 @@ import "ConvertLib.sol";
 // token, see: https://github.com/ConsenSys/Tokens. Cheers!
 
 contract MetaCoin {
-	mapping (address => uint) balances;
+	mapping (address => uint) public balances;
 
 	function MetaCoin() {
 		balances[tx.origin] = 10000;

@@ -55,4 +55,10 @@ contract('MetaCoin', function(accounts) {
         "Amount wasn't correctly sent to the receiver");
     }).then(done).catch(done);
   });
+
+  it("provides balances to the public", function(done) {
+    this.contract.balances(accounts[0]).then(function(balance) {
+      assert.equal(balance.valueOf(), 9990);
+    }).then(done).catch(done);
+  });
 });
