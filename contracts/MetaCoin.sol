@@ -6,32 +6,32 @@ import "ConvertLib.sol";
 // token, see: https://github.com/ConsenSys/Tokens. Cheers!
 
 contract MetaCoin {
-	mapping (address => uint) public balances;
+    mapping (address => uint) public balances;
     mapping (uint => address) public accountIndex;
     uint public accountCount;
 
-	function MetaCoin() {
-		balances[tx.origin] = 10000;
-		setAccountIndexFor(tx.origin);
-		increaseAccountCount();
-	}
+    function MetaCoin() {
+        balances[tx.origin] = 10000;
+        setAccountIndexFor(tx.origin);
+        increaseAccountCount();
+    }
 
-	function sendCoin(address receiver, uint amount) returns(bool sufficient) {
-		if (balances[msg.sender] < amount) return false;
-		balances[msg.sender] -= amount;
-		balances[receiver] += amount;
-		setAccountIndexFor(receiver);
-		increaseAccountCount();
-		return true;
-	}
+    function sendCoin(address receiver, uint amount) returns(bool sufficient) {
+        if (balances[msg.sender] < amount) return false;
+        balances[msg.sender] -= amount;
+        balances[receiver] += amount;
+        setAccountIndexFor(receiver);
+        increaseAccountCount();
+        return true;
+    }
 
-	function getBalanceInEth(address addr) returns(uint){
-		return ConvertLib.convert(getBalance(addr),2);
-	}
+    function getBalanceInEth(address addr) returns(uint){
+        return ConvertLib.convert(getBalance(addr),2);
+    }
 
-  	function getBalance(address addr) returns(uint) {
-    	return balances[addr];
-  	}
+    function getBalance(address addr) returns(uint) {
+        return balances[addr];
+    }
 
     function setAccountIndexFor(address addr) internal {
         accountIndex[accountCount] = addr;
