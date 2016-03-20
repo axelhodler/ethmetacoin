@@ -12,22 +12,32 @@ contract MetaCoin {
 
 	function MetaCoin() {
 		balances[tx.origin] = 10000;
-		accountIndex[accountCount] = tx.origin;
-		accountCount++;
+		setAccountIndexFor(tx.origin);
+		increaseAccountCount();
 	}
 
 	function sendCoin(address receiver, uint amount) returns(bool sufficient) {
 		if (balances[msg.sender] < amount) return false;
 		balances[msg.sender] -= amount;
 		balances[receiver] += amount;
-		accountIndex[accountCount] = receiver;
-		accountCount++;
+		setAccountIndexFor(receiver);
+		increaseAccountCount();
 		return true;
 	}
+
 	function getBalanceInEth(address addr) returns(uint){
 		return ConvertLib.convert(getBalance(addr),2);
 	}
+
   	function getBalance(address addr) returns(uint) {
     	return balances[addr];
   	}
+
+    function setAccountIndexFor(address addr) internal {
+        accountIndex[accountCount] = addr;
+    }
+
+    function increaseAccountCount() internal {
+        accountCount++;
+    }
 }
