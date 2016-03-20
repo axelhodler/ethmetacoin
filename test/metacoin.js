@@ -61,4 +61,25 @@ contract('MetaCoin', function(accounts) {
       assert.equal(balance.valueOf(), 9990);
     }).then(done).catch(done);
   });
+
+  it("can list all balances", function(done) {
+    var count = 0;
+    var balances = [];
+    this.contract.accountCount().then(function(accountCount) {
+      for (i = 0; i < accountCount; i++) {
+        this.contract.accountIndex(i).then(function(address) {
+          this.contract.balances(address).then(function(balance) {
+            balances.push({'address': address, 'balance': balance.valueOf()});
+            if (count == 0) {
+              assert.equal(balances[0].balance, 9990);
+              count++;
+            } else {
+              assert.equal(balances[1].balance, 10);
+              done();
+            }
+          });
+        }.bind(this));
+      }
+    }.bind(this));
+  });
 });

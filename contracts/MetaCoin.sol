@@ -7,15 +7,21 @@ import "ConvertLib.sol";
 
 contract MetaCoin {
 	mapping (address => uint) public balances;
+    mapping (uint => address) public accountIndex;
+    uint public accountCount;
 
 	function MetaCoin() {
 		balances[tx.origin] = 10000;
+		accountIndex[accountCount] = tx.origin;
+		accountCount++;
 	}
 
 	function sendCoin(address receiver, uint amount) returns(bool sufficient) {
 		if (balances[msg.sender] < amount) return false;
 		balances[msg.sender] -= amount;
 		balances[receiver] += amount;
+		accountIndex[accountCount] = receiver;
+		accountCount++;
 		return true;
 	}
 	function getBalanceInEth(address addr) returns(uint){
