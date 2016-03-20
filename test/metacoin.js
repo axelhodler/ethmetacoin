@@ -82,4 +82,13 @@ contract('MetaCoin', function(accounts) {
       }
     }.bind(this));
   });
+
+  it("does not increase account count when sending to existing accounts", function(done) {
+    this.contract.sendCoin(accounts[1], 1000, {from: accounts[0]}).then(function() {
+      this.contract.accountCount().then(function(accountCount) {
+        assert.equal(accountCount.valueOf(), 2);
+        done();
+      });
+    }.bind(this));
+  });
 });

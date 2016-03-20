@@ -20,8 +20,16 @@ contract MetaCoin {
         if (balances[msg.sender] < amount) return false;
         balances[msg.sender] -= amount;
         balances[receiver] += amount;
-        setAccountIndexFor(receiver);
-        increaseAccountCount();
+        bool receiverAccountExists = false;
+        for (uint i=0;i<accountCount;i++) {
+            if (accountIndex[i] == receiver) {
+                receiverAccountExists = true;
+            }
+        }
+        if (!receiverAccountExists) {
+            setAccountIndexFor(receiver);
+            increaseAccountCount();
+        }
         return true;
     }
 
