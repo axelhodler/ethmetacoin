@@ -1,2 +1,3 @@
 .idea/
 environments/development/build/
+*.sol.js
