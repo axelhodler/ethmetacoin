@@ -16,6 +16,21 @@ function refreshBalance() {
     console.log(e);
     setStatus("Error getting balance; see log.");
   });
+
+  var element = document.getElementById("balancesheet");
+  while (element.firstChild) {
+    element.removeChild(element.firstChild);
+  }
+
+  meta.accountCount().then(function(accountCount) {
+    for (i = 0;i < accountCount;i++) {
+      meta.accountIndex(i).then(function(address) {
+        meta.balances(address).then(function(balance) {
+          addAccountToList(address, balance.valueOf());
+        });
+      });
+    }
+  });
 };
 
 function sendCoin() {
@@ -34,6 +49,13 @@ function sendCoin() {
     setStatus("Error sending coin; see log.");
   });
 };
+
+function addAccountToList(account, value) {
+  var node = document.createElement("li");
+  var textnode = document.createTextNode(account + ": " + value);
+  node.appendChild(textnode);
+  document.getElementById("balancesheet").appendChild(node);
+}
 
 window.onload = function() {
   web3.eth.getAccounts(function(err, accs) {
