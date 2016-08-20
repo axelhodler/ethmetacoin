@@ -9,6 +9,6 @@ for this. Start it via
 ```sh
   truffle test
   truffle compile
-  truffle deploy
+  truffle migrate
   truffle serve
 ```
