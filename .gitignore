@@ -1,4 +1,4 @@
 .idea/
-environments/development/build/
+build/
 *.sol.js
 .DS_Store
