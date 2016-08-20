@@ -3,7 +3,7 @@
 Via browser where the client is served in the developer console get the ABI and the contract address
 
 ```javascript
-var abi = JSON.stringify(MetaCoin.deployed().abi)
+var abi = MetaCoin.deployed().abi
 var addr = MetaCoin.deployed().address
 ```
 
