@@ -4,7 +4,7 @@ Via browser where the client is served in the developer console get the ABI and 
 
 ```javascript
 var abi = JSON.stringify(MetaCoin.deployed().abi)
-var addr = MetaCoin.deployed_address
+var addr = MetaCoin.deployed().address
 ```
 
 In the web3 console
